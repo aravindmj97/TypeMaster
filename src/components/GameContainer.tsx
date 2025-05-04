@@ -30,6 +30,7 @@ const GameContainer: React.FC = () => {
     // Simulate a trigger (e.g., a button click) to activate the keyboard
     if(gameState.status === 'playing') {
       if (hiddenInputRef.current) {
+        console.log('Keybard activated');
         hiddenInputRef.current.focus();
       }
     }

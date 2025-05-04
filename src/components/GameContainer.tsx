@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TypingArea from './TypingArea';
 import GameStats from './GameStats';
 import ResultScreen from './ResultScreen';
@@ -8,6 +8,8 @@ import { Keyboard, Play } from 'lucide-react';
 const GameContainer: React.FC = () => {
   const { gameState, startGame, getStats, restartGame } = useTypingGame();
   const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const hiddenInputRef = useRef(null);
 
   // Start a timer when the game is in progress
   useEffect(() => {
@@ -23,6 +25,15 @@ const GameContainer: React.FC = () => {
       if (interval) clearInterval(interval);
     };
   }, [gameState.status, gameState.startTime]);
+
+  useEffect(() => {
+    // Simulate a trigger (e.g., a button click) to activate the keyboard
+    setTimeout(() => {
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.focus();
+      }
+    }, 100); // Delay to ensure the component is mounted
+  }, []);
 
   // Calculate current stats for display during gameplay
   const getCurrentStats = () => {
@@ -87,6 +98,7 @@ const GameContainer: React.FC = () => {
             text={gameState.currentParagraph.text}
             currentPosition={gameState.currentPosition}
           />
+          <input type="text" style={{ display: 'none' }} ref={hiddenInputRef} />
           <p className="mt-4 text-sm text-gray-500 text-center">
             Type the text above. Fix any errors to continue.
           </p>

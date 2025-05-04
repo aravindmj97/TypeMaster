@@ -28,12 +28,12 @@ const GameContainer: React.FC = () => {
 
   useEffect(() => {
     // Simulate a trigger (e.g., a button click) to activate the keyboard
-    setTimeout(() => {
+    if(gameState.status === 'playing') {
       if (hiddenInputRef.current) {
         hiddenInputRef.current.focus();
       }
-    }, 100); // Delay to ensure the component is mounted
-  }, []);
+    }
+  }, [gameState.status]);
 
   // Calculate current stats for display during gameplay
   const getCurrentStats = () => {
